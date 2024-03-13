@@ -25,25 +25,27 @@ const handleSignup = async (req, res) => {
 const handleLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    // const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.sendStatus(401);
-    }
+    // if (!user) {
+    //   return res.sendStatus(401);
+    // }
 
-    const checkPassword = await bcrypt.compare(password, user.password);
+    // const checkPassword = await bcrypt.compare(password, user.password);
 
-    if (!checkPassword) {
-      return res.sendStatus(401);
-    }
+    // if (!checkPassword) {
+    //   return res.sendStatus(401);
+    // }
     const exp = Date.now() + 1000 * 60 * 60 * 2;
 
-    const auth = jwt.sign({ sub: user._id, exp }, process.env.SECRET);
+    // const auth = jwt.sign({ sub: user._id, exp }, process.env.SECRET);
+    const auth = jwt.sign({ sub: "id", exp }, "TESTSECRET");
 
     res.cookie("Auth", auth, {
       maxAge: new Date(exp),
       httpOnly: true,
-      sameSite: "none",
+      // domain:""
+      // sameSite: "none",
     });
 
     res.sendStatus(200);
@@ -56,7 +58,7 @@ const handleLogin = async (req, res) => {
 const handleLogout = async (req, res) => {
   try {
     res.cookie("Auth", "", { maxAge: 0 });
-    req.user = null;
+    // req.user = null;
     res.sendStatus(200);
   } catch (error) {
     res.sendStatus(401);

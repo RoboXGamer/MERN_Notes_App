@@ -4,7 +4,7 @@ import App from "./components/App.jsx";
 import axios from "axios";
 import "./index.css";
 
-axios.defaults.baseURL = "https://mern-notes-app-2k2f.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 // https://mern-notes-app-2k2f.onrender.com
 // http://localhost:3000
 axios.defaults.withCredentials = true;

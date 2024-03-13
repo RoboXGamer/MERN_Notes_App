@@ -19,7 +19,7 @@ const requireAuth = require("./middleware/requireAuth.js");
 
 const cors = require("cors");
 
-connectToDatabase();
+// connectToDatabase();
 
 const app = express();
 app.use(cookieParser());
@@ -31,17 +31,37 @@ app.use(
   })
 );
 
-app.post("/signup", handleSignup);
+// app.post("/signup", handleSignup);
 app.post("/login", handleLogin);
 app.get("/checkAuth", requireAuth, checkAuth);
 app.get("/logout", handleLogout);
 
-app.get("/notes", requireAuth, displayAllNotes);
-app.get("/notes/:id", requireAuth, findNoteById);
-app.put("/notes/:id", requireAuth, changeNoteById);
-app.post("/notes", requireAuth, createNote);
-app.delete("/notes/:id", requireAuth, deleteNoteById);
+// app.get("/notes", requireAuth, displayAllNotes);
+app.get("/notes", requireAuth, (req, res) => {
+  res.json({
+    success: true,
+    data: [
+      {
+        title: "Note1",
+      },
+      {
+        title: "Note2",
+      },
+    ],
+  });
+});
+// app.get("/notes/:id", requireAuth, findNoteById);
+// app.put("/notes/:id", requireAuth, changeNoteById);
+// app.post("/notes", requireAuth, createNote);
+// app.delete("/notes/:id", requireAuth, deleteNoteById);
 
-app.listen(process.env.PORT, () => {
-  console.log(`server running on ${process.env.PORT}`);
+app.get("/api", requireAuth, (req, res) => {
+  res.json({
+    msg: "THIS IS WORKING!",
+    cookies: req.cookies,
+  });
+});
+
+app.listen(3000, () => {
+  console.log(`server running on http://localhost:${3000}`);
 });

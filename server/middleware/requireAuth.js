@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+// const jwt = require("jsonwebtoken");
+// const User = require("../models/user");
 require("dotenv").config();
 
 async function requireAuth(req, res, next) {
@@ -14,20 +14,20 @@ async function requireAuth(req, res, next) {
       return res.sendStatus(401);
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET);
+    // const decoded = jwt.verify(token, process.env.SECRET);
 
-    if (Date.now() > decoded.exp) {
-      console.log("expired token");
-      return res.sendStatus(401);
-    }
+    // if (Date.now() > decoded.exp) {
+    //   console.log("expired token");
+    //   return res.sendStatus(401);
+    // }
 
-    const user = await User.findById(decoded.sub);
-    if (!user) {
-      console.log("no user");
-      return res.sendStatus(401);
-    }
+    // const user = await User.findById(decoded.sub);
+    // if (!user) {
+    //   console.log("no user");
+    //   return res.sendStatus(401);
+    // }
 
-    req.user = user;
+    // req.user = user;
 
     next();
   } catch (error) {
